@@ -23,6 +23,6 @@ class Task:
         print("Running time: ", self.time)
 
 
-if __name__ == "main":
+if __name__ == '__main__':
     Task_one = Task(1, 6000)
     Task_one.work()
