@@ -1,24 +1,33 @@
-from Managers import QueueClient
+import time
 from Task import Task
+from Managers import QueueClient
 
 
 class Boss:
     def __init__(self):
-        self.queue = QueueClient()
+        self.client = QueueClient()
 
-    def createTask(self, task):
-        self.queue.tasks.put(task)
+    def add_task(self, identifier, size=None):
+        task = Task(identifier, size)
 
-    def lookForAResult(self):
-        queue = self.queue.getResult()
-        result = queue.get()
-        print(result)
+        self.client.tasks.put(task)
+
+        print(f"Boss added task {identifier} to the queue.")
 
 
 if __name__ == "__main__":
-    b = Boss()
-    t = Task("000", 100)
-    for i in range(10):
-        b.createTask(t)
-    while 1:
-        b.lookForAResult()
+    boss = Boss()
+
+    while True:
+        try:
+            task_count = int(input("Enter the number of tasks to add (0 to quit): "))
+
+            if task_count == 0:
+                break
+
+            for i in range(task_count):
+                boss.add_task(i, 6000)
+
+        except ValueError:
+            print("Please enter a valid number.")
+

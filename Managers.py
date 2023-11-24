@@ -11,33 +11,34 @@ class QueueManager(BaseManager):
 
 
 class QueueClient:
-    def __init__(self):
+    """Base class for users of the Queue."""
+
+    def __init__(self, manager_host="localhost"):
         QueueManager.register("get_tasks")
         QueueManager.register("get_results")
-        manager = QueueManager(
-            address=(os.environ.get("MANAGER_HOST", "localhost"), PORT), authkey=KEY
-        )
+
+        manager = QueueManager(address=(manager_host, PORT), authkey=KEY)
         manager.connect()
+
         self.tasks = manager.get_tasks()
         self.results = manager.get_results()
-
-    def getTask(self):
-        return self.tasks
-
-    def getResult(self):
-        return self.results
 
 
 if __name__ == "__main__":
     task_queue = multiprocessing.Queue()
     result_queue = multiprocessing.Queue()
+
     QueueManager.register("get_tasks", callable=lambda: task_queue)
     QueueManager.register("get_results", callable=lambda: result_queue)
+
     try:
-        QueueManager(address=("", PORT), authkey=KEY).get_server().serve_forever()
+        manager = QueueManager(address=("", PORT), authkey=KEY)
+        server = manager.get_server()
+        print(f"QueueManager server started successfully on port {PORT}.")
+        server.serve_forever()
+
     finally:
-        print()
         print(
-            f"exiting with approximately {task_queue.qsize()} items left in task queue"
-            f" and {result_queue.qsize()} items left in result queue."
+            f"Exiting with approximately {task_queue.qsize()} items left in the task queue"
+            f" and {result_queue.qsize()} items left in the result queue."
         )

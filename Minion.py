@@ -1,42 +1,20 @@
-import time
-
-import Managers
+from Managers import QueueClient
 
 
 class Minion:
     def __init__(self):
-        self.tache = None
-        self.queue = Managers.QueueClient()
-        self.result = None
+        self.client = QueueClient()
 
-    def takeATask(self, t):
-        self.tache = t
-
-    def lookForATask(self):
-        queue = self.queue.getTask()
-        task = queue.get()
-        if task:
-            self.takeATask(task)
-            return True
-        return False
-
-    def taskEnded(self):
-        if self.result is not None:
-            results = self.queue.getResult()
-            results.put(self.result)
-            self.tache = None
-            self.result = None
-            print("ok")
-
-    def workOnTask(self):
-        self.tache.work()
-        self.result = self.tache.x
+    def process_tasks(self):
+        while True:
+            print("Listening...")
+            task = self.client.tasks.get()
+            print("Received")
+            task.work()
+            self.client.results.put((task.identifier, task.time))
+            print(f"Minion processed task {task.identifier} in {task.time:.4f} seconds")
 
 
 if __name__ == "__main__":
     minion = Minion()
-    while 1:
-        time.sleep(2)
-        if minion.lookForATask():
-            minion.workOnTask()
-            minion.taskEnded()
+    minion.process_tasks()
