@@ -1,4 +1,4 @@
-from time import perf_counter
+import time
 
 import numpy as np
 
@@ -15,11 +15,9 @@ class Task:
         self.x = np.zeros(size)
 
     def work(self):
-        print("ID_Task=", self.identifier)
-        start = perf_counter()
+        start = time.perf_counter()
         self.x = np.linalg.solve(self.a, self.b)
-        end = perf_counter()
-        self.time = end - start
+        self.time = time.perf_counter() - start
         print("Running time: ", self.time)
 
 
