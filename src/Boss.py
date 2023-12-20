@@ -26,7 +26,7 @@ if __name__ == "__main__":
                 break
 
             for i in range(task_count):
-                boss.add_task(i, 10)
+                boss.add_task(i, 4000)
 
         except ValueError:
             print("Please enter a valid number.")

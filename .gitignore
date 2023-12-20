@@ -1,4 +1,6 @@
 .venv
 .idea
+.vscode
+/src/build
 *.pyc
 *__pycache__*

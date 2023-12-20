@@ -6,7 +6,7 @@ class Minion:
         self.client = QueueClient()
 
     def process_tasks(self):
-        while True:
+        #while :
             print("Listening...")
             task = self.client.tasks.get()
             print("Received")
