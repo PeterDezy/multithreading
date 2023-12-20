@@ -10,7 +10,7 @@ class Minion:
             print("Listening...")
             task = self.client.tasks.get()
             print("Received")
-            task.work()
+            task.work() # Environ 9.8 secondes pour une taille de 4000
             self.client.results.put((task.identifier, task.time))
             print(f"Minion processed task {task.identifier} in {task.time:.4f} seconds")
 

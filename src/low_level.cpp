@@ -45,7 +45,8 @@ public:
     void work()
     {
         auto start_time = high_resolution_clock::now();
-        x = a.lu().solve(b);
+        // x = a.colPivHouseholderQr().solve(b); // Environ 13.2 secondes pour une taille de 4000
+        x = a.lu().solve(b); // Environ 1.9 secondes pour une taille de 4000
         auto end_time = high_resolution_clock::now();
         auto duration = duration_cast<milliseconds>(end_time - start_time);
         std::cout << "Duration: " << duration.count() << " milliseconds" << std::endl;
