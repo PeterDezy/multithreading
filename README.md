@@ -19,14 +19,14 @@ Ce projet a été créé dans le cadre du cours de multithreading. Il est compos
 5. **Task**
    - La classe Task représente une résolution linéaire ax = b. Elle possède une fonction pour calculer le temps de résolution et résoudre l'équation. De plus, la classe Task peut convertir les paramètres liés à la Task au format JSON.
 
-## Fichier C++ et Classe
+## Fichiers C++
 
 Le projet comprend également un fichier CMakeLists et une classe C++.
 
 1. **low_level**
    - La classe low_level permet la lecture d'un fichier JSON sur une adresse locale et la résolution de l'équation en fonction de la méthode choisie.
 
-## Résultat
+## Résultats
 
 Le projet vise à démontrer l'utilisation du multithreading dans la résolution d'équations linéaires, en utilisant différentes classes Python pour gérer les tâches et un composant C++ pour la résolution bas niveau.
 
